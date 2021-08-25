@@ -1,16 +1,37 @@
-html,
+@import "../css/icons.css";
+
+:root {
+  --black: #373737;
+  --primary: #181818;
+  --white: #ffffff;
+  --grey: #6f6f6f;
+  --red: #fa513a;
+  --grey-2: #a3a3a3;
+  --headline1: 600 1.75rem / normal "Poppins", sans-serif;
+  --headline2: 600 1.5rem / normal "Poppins", sans-serif;
+  --headline3: 600 1.25rem/1.375rem "Poppins", sans-serif;
+  --button: 400 0.875rem/1rem "Poppins", sans-serif;
+  --body1-regular: 400 1rem/1.5rem "Poppins", sans-serif;
+  --body1-bold: 700 1rem/1.5rem "Poppins", sans-serif;
+  --body2-bold: 700 0.875rem/1.5rem "Poppins", sans-serif;
+  --body2-regular: 400 0.875rem/1.5rem "Poppins", sans-serif;
+  --caption-regular: 400 0.75rem/1rem "Poppins", sans-serif;
+  --caption-bold: 600 0.75rem/1rem "Poppins", sans-serif;
+}
+
 body {
-  padding: 0;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: var(--white);
+  background-color: var(--primary);
+}
+
+* {
+  box-sizing: border-box;
 }
 
 a {
   color: inherit;
   text-decoration: none;
-}
-
-* {
-  box-sizing: border-box;
 }
