@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useRef, useEffect } from "react";
 import styled from "styled-components";
+import searchVideo from "../../services/searchVideo";
 
 const InputStyled = styled.input`
   padding: 0.75rem 6.12rem 0.75rem 1rem;
@@ -12,8 +13,14 @@ const InputStyled = styled.input`
   border-radius: 0.5rem;
 `;
 
-function Input() {
-  return <InputStyled placeholder="Buscar video"></InputStyled>;
+function Input({}) {
+  return (
+    <InputStyled
+      placeholder="Buscar video"
+      name="input"
+      autoComplete="off"
+    ></InputStyled>
+  );
 }
 
 export default Input;

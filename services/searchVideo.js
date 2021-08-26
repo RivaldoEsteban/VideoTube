@@ -1,6 +1,5 @@
-async function getVideoList() {
-  const response = await fetch(`/api/videos`);
-  console.log(response);
+async function searchVideo(input) {
+  const response = await fetch(`/api/search-video?input=${input}`);
   if (!response.ok) {
     throw new Error("No se pudo obtener los datos");
   }
@@ -8,4 +7,4 @@ async function getVideoList() {
   return data;
 }
 
-export default getVideoList;
+export default searchVideo;

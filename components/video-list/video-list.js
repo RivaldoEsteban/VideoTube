@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import styled from "styled-components";
 import Card from "../card/card";
 import Wrapper from "../wrapper/wrapper";
 import getVideoList from "../../services/getVideoList";
+import { Context } from "../../pages/_app";
 
 const VideeoListStyled = styled.main`
   padding: 1rem;
@@ -17,18 +18,20 @@ const VideeoListStyled = styled.main`
 `;
 
 function VideoList() {
+  const context = useContext(Context);
   const [videoList, setVideoList] = useState([]);
 
   useEffect(() => {
     getVideoList()
       .then((data) => {
         setVideoList(data.items);
+        context.setVideoList(data.items);
       })
       .catch((err) => {
         console.log(err);
       });
   }, []);
-  console.log(videoList);
+
   return (
     <VideeoListStyled>
       <Wrapper>

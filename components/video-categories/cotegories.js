@@ -1,14 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import ButtonCategory from "../button-category/button-category";
 import Wrapper from "../wrapper/wrapper";
 
 const CotegoriesStyled = styled.section`
   padding: 1rem;
-  div {
-    display: flex;
-    flex: 1;
-    gap: 1.5rem;
+  overflow: auto;
+  .category-container {
+    white-space: nowrap;
+    overflow: auto;
   }
 `;
 
@@ -26,19 +26,26 @@ const categories = [
     id: "category3",
   },
   {
-    category: "Diseño UX",
+    category: "Diseño ux",
     id: "category4",
   },
 ];
 
 function VideoCategory() {
+  const [buttonActive, setButtonActive] = useState("category1");
   return (
     <CotegoriesStyled aria-label="categorias">
       <Wrapper>
-        <div>
+        <div className="category-container">
           {categories.map((category) => {
+            const active = buttonActive === category.id ? "is-active" : null;
             return (
-              <ButtonCategory key={category.id} text={category.category} />
+              <ButtonCategory
+                key={category.id}
+                text={category}
+                setButtonActive={setButtonActive}
+                active={active}
+              />
             );
           })}
         </div>
