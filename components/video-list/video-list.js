@@ -3,6 +3,7 @@ import styled from "styled-components";
 import Card from "../card/card";
 import Wrapper from "../wrapper/wrapper";
 import getVideoList from "../../services/getVideoList";
+import searchVideo from "../../services/searchVideo";
 import { Context } from "../../pages/_app";
 
 const VideeoListStyled = styled.main`
@@ -19,12 +20,10 @@ const VideeoListStyled = styled.main`
 
 function VideoList() {
   const context = useContext(Context);
-  const [videoList, setVideoList] = useState([]);
-
+  const videoList = context.value;
   useEffect(() => {
-    getVideoList()
+    searchVideo("todo sobre programacion", 20)
       .then((data) => {
-        setVideoList(data.items);
         context.setVideoList(data.items);
       })
       .catch((err) => {

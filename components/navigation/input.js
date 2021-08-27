@@ -13,12 +13,18 @@ const InputStyled = styled.input`
   border-radius: 0.5rem;
 `;
 
-function Input({}) {
+function Input({ setSearchActive }) {
+  const inputValue = useRef(null);
+  function handleSearch() {
+    setSearchActive(inputValue.current.value);
+  }
   return (
     <InputStyled
       placeholder="Buscar video"
       name="input"
       autoComplete="off"
+      ref={inputValue}
+      onChange={handleSearch}
     ></InputStyled>
   );
 }

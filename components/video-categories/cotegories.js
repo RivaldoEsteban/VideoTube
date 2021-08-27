@@ -18,16 +18,20 @@ const categories = [
     id: "category1",
   },
   {
-    category: "Música",
+    category: "Leonidas Esteban",
     id: "category2",
   },
   {
-    category: "Programación",
+    category: "Música",
     id: "category3",
   },
   {
-    category: "Diseño ux",
+    category: "Programación",
     id: "category4",
+  },
+  {
+    category: "Diseño ux",
+    id: "category5",
   },
 ];
 

@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useContext } from "react";
 import styled from "styled-components";
 import searchVideo from "../../services/searchVideo";
+import { Context } from "../../pages/_app";
 
 const ButtonCategoryStyled = styled.button`
   border-radius: 4rem;
@@ -23,15 +24,16 @@ const ButtonCategoryStyled = styled.button`
 `;
 
 function ButtonCategory({ text, setButtonActive, active }) {
-  async function buttonActive() {
+  const context = useContext(Context);
+  function buttonActive() {
     setButtonActive(text.id);
-    console.log("hola");
-    searchVideo(text.category.toLowerCase())
+    searchVideo(text.category.toLowerCase(), 20)
       .then((data) => {
-        console.log(data);
+        context.setVideoList(data.items);
       })
       .catch((err) => console.log("hubo un error en la peticion", err));
   }
+
   return (
     <ButtonCategoryStyled onClick={buttonActive} className={active}>
       {text.category}

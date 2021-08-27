@@ -38,8 +38,7 @@ function SearchVideo() {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
     const input = formData.get("input");
-    setSearchActive(input);
-    searchVideo(input)
+    searchVideo(input, 5)
       .then((data) => {
         setCurrentInputValue(data.items);
       })
@@ -50,17 +49,15 @@ function SearchVideo() {
 
   return (
     <SearchVideoStyled onSubmit={handleSubmit}>
-      <Input />
+      <Input setSearchActive={setSearchActive} />
       <ButtonSearch />
-      {searchActive.length > 0
-        ? currentInputValue.map((video) => {
-            return (
-              <span key={video}>
-                <p>{video.snippet.title}</p>
-              </span>
-            );
-          })
-        : null}
+      {searchActive.length > 0 && currentInputValue.length > 0 ? (
+        <span>
+          {currentInputValue.map((video) => {
+            return <p key={video.id.videoId}>{video.snippet.title}</p>;
+          })}
+        </span>
+      ) : null}
     </SearchVideoStyled>
   );
 }

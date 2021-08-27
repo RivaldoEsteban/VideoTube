@@ -1,11 +1,13 @@
 /* eslint-disable @next/next/no-img-element */
 import React from "react";
 import styled from "styled-components";
+import { useRouter } from "next/router";
 
 const CardStyled = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1rem;
+  cursor: pointer;
   .image-container {
     position: relative;
     img {
@@ -39,6 +41,13 @@ const CardStyled = styled.div`
       font: var(--body2-regular);
       color: var(--grey-2);
     }
+    .avatar {
+      block-size: 2rem;
+      inline-size: 2rem;
+      object-fit: cover;
+      vertical-align: middle;
+      border-radius: 50%;
+    }
   }
   @media (max-width: 768px) {
     .grid {
@@ -52,9 +61,15 @@ function Card({ data }) {
   const date = new Date(data.snippet.publishedAt);
   const elapsedTime = (currentDate - date).toFixed(0);
   const daysPassed = (elapsedTime / 1000 / 60 / 60 / 24).toFixed(0);
+  const router = useRouter();
+  console.log(data);
+  function viewVideo() {
+    console.log(router);
+    // router.push(data);
+  }
 
   return (
-    <CardStyled id={data.id.videoId}>
+    <CardStyled id={data.id.videoId} onClick={viewVideo}>
       <div className="image-container">
         <img
           className="image-video"
@@ -67,7 +82,7 @@ function Card({ data }) {
         <div>
           <img
             className="avatar"
-            src="./images/avatar.svg"
+            src={data.snippet.thumbnails.default.url}
             alt="avatar del usuario"
           />
         </div>
