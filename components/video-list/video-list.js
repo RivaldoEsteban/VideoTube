@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect, useContext } from "react";
 import styled from "styled-components";
 import Card from "../card/card";
@@ -33,7 +32,7 @@ function VideoList() {
         console.log(err);
         context.setVideoList(currentList.items);
       });
-  }, [videoList]);
+  }, [videoList, currentList.items, context]);
 
   return (
     <VideeoListStyled>

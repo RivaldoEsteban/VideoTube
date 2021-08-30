@@ -1,8 +1,6 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useRouter } from "next/router";
-import { Context } from "./_app";
 import Logo from "../components/logo/logo";
 import Header from "../components/header/header";
 import SearchVideo from "../components/navigation/search-video";
@@ -42,17 +40,10 @@ const VideoStyled = styled.div`
 function Video() {
   const router = useRouter();
   const [videoList, setVideoList] = useState([]);
-  const context = useContext(Context);
-
-  let currentVideo;
-  context.value.find((video) => {
-    if (router.query.v === video.id.videoId) {
-      currentVideo = video;
-    }
-  });
-
+  const [currentVideo, setCurrentVideo] = useState([]);
   useEffect(() => {
-    const search = currentVideo.snippet.channelTitle;
+    setCurrentVideo(JSON.parse(localStorage.getItem("video")));
+    const search = JSON.parse(localStorage.getItem("video"));
     searchVideo(search, 10)
       .then((videoList) => {
         setVideoList(videoList.items);
@@ -61,7 +52,7 @@ function Video() {
         console.log(err);
         setVideoList(list.items);
       });
-  }, [videoList]);
+  }, [router.query.v]);
 
   return (
     <VideoStyled>
@@ -70,7 +61,9 @@ function Video() {
         <SearchVideo />
       </Header>
       <div className="video-container">
-        <Card data={currentVideo} video={currentVideo.id.videoId} />
+        {currentVideo.kind ? (
+          <Card data={currentVideo} video={currentVideo?.id?.videoId} />
+        ) : null}
         <SuggestedVideos videoList={videoList} />
       </div>
     </VideoStyled>

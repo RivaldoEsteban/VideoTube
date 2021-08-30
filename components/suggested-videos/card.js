@@ -63,6 +63,7 @@ function Card({ data, video }) {
 
   function viewVideo() {
     router.push(`/watch?v=${data.id.videoId}`);
+    localStorage.setItem("video", JSON.stringify(data));
   }
   return (
     <CardStyled id={data.id.videoId}>
