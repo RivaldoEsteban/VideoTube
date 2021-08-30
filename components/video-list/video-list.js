@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect, useContext } from "react";
 import styled from "styled-components";
 import Card from "../card/card";
@@ -29,16 +30,17 @@ function VideoList() {
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+  }, [videoList]);
 
   return (
     <VideeoListStyled>
       <Wrapper>
         <div className="grid">
-          {videoList.length > 0 &&
-            videoList.map((videoData) => {
-              return <Card key={videoData.id.videoId} data={videoData} />;
-            })}
+          {videoList.length > 0
+            ? videoList.map((videoData) => {
+                return <Card key={videoData.id.videoId} data={videoData} />;
+              })
+            : null}
         </div>
       </Wrapper>
     </VideeoListStyled>

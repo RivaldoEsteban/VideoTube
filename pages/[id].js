@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
 import { useRouter } from "next/router";
@@ -32,7 +33,7 @@ const VideoStyled = styled.div`
 
 function Video() {
   const router = useRouter();
-  const [videoList, setVideoList] = useState("");
+  const [videoList, setVideoList] = useState([]);
   const context = useContext(Context);
 
   let currentVideo;
@@ -47,7 +48,7 @@ function Video() {
     searchVideo(search, 10).then((videoList) => {
       setVideoList(videoList.items);
     });
-  }, []);
+  }, [videoList]);
 
   return (
     <VideoStyled>
