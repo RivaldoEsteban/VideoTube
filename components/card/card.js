@@ -7,15 +7,18 @@ const CardStyled = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  cursor: pointer;
   .image-container {
     position: relative;
-    img {
+    .image-video {
       vertical-align: middle;
       inline-size: inherit;
       position: relative;
       width: 100%;
       object-fit: cover;
+      cursor: pointer;
+    }
+    .video {
+      height: 500px;
     }
     .time {
       position: absolute;
@@ -56,27 +59,38 @@ const CardStyled = styled.div`
   }
 `;
 
-function Card({ data }) {
+function Card({ data, video }) {
   const currentDate = new Date();
   const date = new Date(data.snippet.publishedAt);
   const elapsedTime = (currentDate - date).toFixed(0);
   const daysPassed = (elapsedTime / 1000 / 60 / 60 / 24).toFixed(0);
   const router = useRouter();
-  console.log(data);
+  // console.log(data);
   function viewVideo() {
     console.log(router);
-    // router.push(data);
+    router.push(`/watch?v=${data.id.videoId}`);
   }
-
+  console.log(video);
   return (
-    <CardStyled id={data.id.videoId} onClick={viewVideo}>
+    <CardStyled id={data.id.videoId}>
       <div className="image-container">
-        <img
-          className="image-video"
-          src={data.snippet.thumbnails.medium.url}
-          alt="cover del video"
-        />
-        <span className="time">10:10</span>
+        {video ? (
+          <iframe
+            src={`https://www.youtube.com/embed/${video}`}
+            frameBorder="0"
+            className="image-video video"
+          ></iframe>
+        ) : (
+          <>
+            <img
+              className="image-video"
+              src={data.snippet.thumbnails.medium.url}
+              alt="cover del video"
+              onClick={viewVideo}
+            />
+            <span className="time">10:10</span>
+          </>
+        )}
       </div>
       <div className="video-info">
         <div>
