@@ -5,20 +5,15 @@ import { useRouter } from "next/router";
 
 const CardStyled = styled.div`
   display: flex;
-  flex-direction: column;
   gap: 1rem;
   .image-container {
     position: relative;
     .image-video {
       vertical-align: middle;
       inline-size: inherit;
-      position: relative;
-      width: 100%;
       object-fit: cover;
       cursor: pointer;
-    }
-    .video {
-      height: 600px;
+      max-inline-size: 195px;
     }
     .time {
       position: absolute;
@@ -30,6 +25,7 @@ const CardStyled = styled.div`
       font: var(--body2-regular);
     }
   }
+
   .video-info {
     display: flex;
     align-items: flex-start;
@@ -51,19 +47,9 @@ const CardStyled = styled.div`
       border-radius: 50%;
     }
   }
-  @media (max-width: 1200px) {
-    .image-container .video {
-      height: 400px;
-    }
-  }
   @media (max-width: 768px) {
     .grid {
       max-inline-size: initial;
-    }
-  }
-  @media (max-width: 576px) {
-    .image-container .video {
-      height: 300px;
     }
   }
 `;
@@ -78,42 +64,39 @@ function Card({ data, video }) {
   function viewVideo() {
     router.push(`/watch?v=${data.id.videoId}`);
   }
-
   return (
     <CardStyled id={data.id.videoId}>
-      <div className="image-container">
-        {video ? (
-          <iframe
-            src={`https://www.youtube.com/embed/${video}`}
-            frameBorder="0"
-            className="image-video video"
-          ></iframe>
-        ) : (
-          <>
-            <img
-              className="image-video"
-              src={data.snippet.thumbnails.medium.url}
-              alt="cover del video"
-              onClick={viewVideo}
-            />
-            <span className="time">10:10</span>
-          </>
-        )}
-      </div>
-      <div className="video-info">
-        <div>
-          <img
-            className="avatar"
-            src={data.snippet.thumbnails.default.url}
-            alt="avatar del usuario"
-          />
-        </div>
-        <div>
-          <h3 className="video-name">{data.snippet.title}</h3>
-          <span className="video-youtuber">{data.snippet.channelTitle}</span>
-          <span className="video-views">{`Hace ${daysPassed} días`}</span>
-        </div>
-      </div>
+      {data.id.videoId ? (
+        <>
+          <div className="image-container">
+            {video ? (
+              <iframe
+                src={`https://www.youtube.com/embed/${video}`}
+                frameBorder="0"
+                className="image-video video"
+              ></iframe>
+            ) : (
+              <>
+                <img
+                  className="image-video"
+                  src={data.snippet.thumbnails.medium.url}
+                  alt="cover del video"
+                  onClick={viewVideo}
+                />
+              </>
+            )}
+          </div>
+          <div className="video-info">
+            <div>
+              <h3 className="video-name">{data.snippet.title}</h3>
+              <span className="video-youtuber">
+                {data.snippet.channelTitle}
+              </span>
+              <span className="video-views">{`Hace ${daysPassed} días`}</span>
+            </div>
+          </div>
+        </>
+      ) : null}
     </CardStyled>
   );
 }

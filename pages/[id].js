@@ -8,14 +8,16 @@ import Header from "../components/header/header";
 import SearchVideo from "../components/navigation/search-video";
 import Card from "../components/card/card";
 import searchVideo from "../services/searchVideo";
+import { videoList as list } from "../viodeList/list";
+import SuggestedVideos from "../components/suggested-videos/suggested-videos";
 
 const VideoStyled = styled.div`
   display: flex;
   flex-direction: column;
   block-size: 100vh;
+  box-sizing: border-box;
   .video-container {
     padding: 1rem;
-    border: 1px solid red;
     display: grid;
     grid-template-columns: auto 415px;
     overflow: auto;
@@ -27,6 +29,12 @@ const VideoStyled = styled.div`
       display: flex;
       flex-direction: column;
       gap: 1rem;
+    }
+  }
+  @media (max-width: 1200px) {
+    .video-container {
+      grid-template-columns: auto;
+      box-sizing: border-box;
     }
   }
 `;
@@ -45,9 +53,14 @@ function Video() {
 
   useEffect(() => {
     const search = currentVideo.snippet.channelTitle;
-    searchVideo(search, 10).then((videoList) => {
-      setVideoList(videoList.items);
-    });
+    searchVideo(search, 10)
+      .then((videoList) => {
+        setVideoList(videoList.items);
+      })
+      .catch((err) => {
+        console.log(err);
+        setVideoList(list.items);
+      });
   }, [videoList]);
 
   return (
@@ -58,13 +71,7 @@ function Video() {
       </Header>
       <div className="video-container">
         <Card data={currentVideo} video={currentVideo.id.videoId} />
-        <div className="video-list">
-          {videoList.length > 0
-            ? videoList.map((video) => {
-                return <Card key={video.id.videoId} data={video} />;
-              })
-            : null}
-        </div>
+        <SuggestedVideos videoList={videoList} />
       </div>
     </VideoStyled>
   );

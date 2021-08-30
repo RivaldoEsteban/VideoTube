@@ -3,9 +3,9 @@ import React, { useState, useEffect, useContext } from "react";
 import styled from "styled-components";
 import Card from "../card/card";
 import Wrapper from "../wrapper/wrapper";
-import getVideoList from "../../services/getVideoList";
 import searchVideo from "../../services/searchVideo";
 import { Context } from "../../pages/_app";
+import { videoList as list } from "../../viodeList/list";
 
 const VideeoListStyled = styled.main`
   padding: 1rem;
@@ -22,6 +22,8 @@ const VideeoListStyled = styled.main`
 function VideoList() {
   const context = useContext(Context);
   const videoList = context.value;
+  const currentList = list;
+
   useEffect(() => {
     searchVideo("todo sobre programacion", 20)
       .then((data) => {
@@ -29,6 +31,7 @@ function VideoList() {
       })
       .catch((err) => {
         console.log(err);
+        context.setVideoList(currentList.items);
       });
   }, [videoList]);
 
@@ -38,7 +41,11 @@ function VideoList() {
         <div className="grid">
           {videoList.length > 0
             ? videoList.map((videoData) => {
-                return <Card key={videoData.id.videoId} data={videoData} />;
+                {
+                  return videoData.id.videoId ? (
+                    <Card key={videoData.id.videoId} data={videoData} />
+                  ) : null;
+                }
               })
             : null}
         </div>
