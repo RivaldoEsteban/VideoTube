@@ -32,7 +32,7 @@ function VideoList() {
         console.log(err);
         context.setVideoList(currentList.items);
       });
-  }, [videoList, currentList.items, context]);
+  }, []);
 
   return (
     <VideeoListStyled>

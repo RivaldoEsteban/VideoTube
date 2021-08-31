@@ -3,6 +3,7 @@ import styled from "styled-components";
 import Input from "./input";
 import ButtonSearch from "./button-search";
 import searchVideo from "../../services/searchVideo";
+import { useRouter } from "next/router";
 
 const SearchVideoStyled = styled.form`
   display: flex;
@@ -26,6 +27,7 @@ const SearchVideoStyled = styled.form`
     gap: 0.5rem;
     p {
       margin: 0;
+      cursor: pointer;
     }
   }
 `;
@@ -33,7 +35,7 @@ const SearchVideoStyled = styled.form`
 function SearchVideo() {
   const [currentInputValue, setCurrentInputValue] = useState([]);
   const [searchActive, setSearchActive] = useState(false);
-
+  const router = useRouter();
   function handleSubmit(event) {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
@@ -47,6 +49,12 @@ function SearchVideo() {
       });
   }
 
+  function handleVideo(video) {
+    setSearchActive(false);
+    router.push(`/watch?v=${video.id.videoId}`);
+    localStorage.setItem("video", JSON.stringify(video));
+  }
+
   return (
     <SearchVideoStyled onSubmit={handleSubmit}>
       <Input setSearchActive={setSearchActive} />
@@ -54,7 +62,16 @@ function SearchVideo() {
       {searchActive.length > 0 && currentInputValue.length > 0 ? (
         <span>
           {currentInputValue.map((video) => {
-            return <p key={video.id.videoId}>{video.snippet.title}</p>;
+            return (
+              <p
+                key={video.id.videoId}
+                onClick={() => {
+                  handleVideo(video);
+                }}
+              >
+                {video.snippet.title}
+              </p>
+            );
           })}
         </span>
       ) : null}
