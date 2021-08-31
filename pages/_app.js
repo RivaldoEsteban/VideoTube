@@ -85,6 +85,17 @@ function MyApp({ Component, pageProps }) {
           content="favicon/ms-icon-144x144.png"
         />
         <meta name="theme-color" content="#ffffff" />
+
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://videotube-next.vercel.app/" />
+        <meta
+          property="og:image"
+          content="https://github.com/RivaldoEsteban/VideoTube/blob/main/public/images/imageOpengraph.png?raw=true"
+        />
+        <meta
+          property="og:description"
+          content="Descubre contenido nuevo y entretenimiento constante con VideoTube el mejor lugar para pasar el tiempo aprendiendo y divirtiéndote."
+        />
         <title>VideoTube | Rivaldo Esteban portafolio</title>
       </Head>
       <Context.Provider value={{ value: videoList, setVideoList }}>
